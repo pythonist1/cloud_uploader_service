@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "test-task"
+version = "0.1.0"
+description = ""
+authors = ["Aziz <az.architector@gmail.com>"]
+readme = "README.md"
+packages = [
+    {include = "cloud_uploader_service", from = "src"},
+    {include = "fake_cloud_service_client"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.20.0"
+fastapi = "^0.92.0"
+pydantic = "^1.10.5"
+aioredis = "^2.0.1"
+python-dotenv = "^1.0.0"
+aiohttp = "^3.8.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest-mock = "^3.10.0"
+pytest-asyncio = "^0.20.3"
+pytest-trio = "^0.8.0"
+pytest-tornasync = "^0.6.0.post2"
+poethepoet = "^0.18.1"
+pylama = "^8.4.1"
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+pytest-sanic = "^1.9.1"
+sanic = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run_api = "cloud_uploader_service.api.run:run_api"
+
+[tool.poe.tasks]
+test = "poetry run pytest --cov=./src/cloud_uploader_service --cov-report=term-missing"
+lint = "poetry run pylama ./src/cloud_uploader_service --ignore E501,W0611,E704 --linters print,pyflakes,pycodestyle,mccabe --format pylint"
