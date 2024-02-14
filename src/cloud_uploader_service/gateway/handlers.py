@@ -1,6 +1,6 @@
 import asyncio
 from fastapi import APIRouter
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 from cloud_uploader_service.service_layer.command import Command as command
 from cloud_uploader_service.service_layer import UseCaseHandler
 from .schemas import ResponseModel, CreateUploadCaseData, UploadFilePartData, CompleteUploadData, DeleteUploadData
@@ -12,7 +12,7 @@ class UploadRoutes:
                  ):
         self._router = APIRouter(prefix='/v1/cloud_uploader')
         self._use_case_handler = use_case_handler
-        self._thread_pool_executor = ThreadPoolExecutor()
+        self._thread_pool_executor = ProcessPoolExecutor()
         self._register_routes()
 
     @property
