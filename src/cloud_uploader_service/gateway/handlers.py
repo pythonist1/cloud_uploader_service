@@ -2,13 +2,12 @@ import asyncio
 from fastapi import APIRouter
 from concurrent.futures import ProcessPoolExecutor
 from cloud_uploader_service.service_layer.command import Command as command
-from cloud_uploader_service.service_layer import UseCaseHandler
 from .schemas import ResponseModel, CreateUploadCaseData, UploadFilePartData, CompleteUploadData, DeleteUploadData
 
 
 class UploadRoutes:
     def __init__(self,
-                 use_case_handler: UseCaseHandler,
+                 use_case_handler,
                  ):
         self._router = APIRouter(prefix='/v1/cloud_uploader')
         self._use_case_handler = use_case_handler
